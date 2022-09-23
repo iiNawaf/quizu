@@ -21,61 +21,57 @@ class OtpInput extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Container(
+        InputText(
+          keyboardType: TextInputType.number,
           height: 60,
           width: 60,
-          child: InputText(
-            textAlign: TextAlign.center,
-            hint: "-",
-            controller: controller1,
-            length: 1,
-            focusNode: focusNode1,
-            onChanged: (value) {
-              FocusScope.of(context).requestFocus(focusNode2);
-            },
-          ),
+          textAlign: TextAlign.center,
+          hint: "-",
+          controller: controller1,
+          length: 1,
+          focusNode: focusNode1,
+          onChanged: (value) {
+            FocusScope.of(context).requestFocus(focusNode2);
+          },
         ),
-        Container(
+        InputText(
+          keyboardType: TextInputType.number,
           height: 60,
           width: 60,
-          child: InputText(
-            textAlign: TextAlign.center,
-            hint: "-",
-            controller: controller2,
-            focusNode: focusNode2,
-            length: 1,
-            onChanged: (value) {
-              FocusScope.of(context).requestFocus(focusNode3);
-            },
-          ),
+          textAlign: TextAlign.center,
+          hint: "-",
+          controller: controller2,
+          focusNode: focusNode2,
+          length: 1,
+          onChanged: (value) {
+            FocusScope.of(context).requestFocus(focusNode3);
+          },
         ),
-        Container(
+        InputText(
+          keyboardType: TextInputType.number,
           height: 60,
           width: 60,
-          child: InputText(
-            textAlign: TextAlign.center,
-            hint: "-",
-            controller: controller3,
-            length: 1,
-            focusNode: focusNode3,
-            onChanged: (value) {
-              FocusScope.of(context).requestFocus(focusNode4);
-            },
-          ),
+          textAlign: TextAlign.center,
+          hint: "-",
+          controller: controller3,
+          length: 1,
+          focusNode: focusNode3,
+          onChanged: (value) {
+            FocusScope.of(context).requestFocus(focusNode4);
+          },
         ),
-        Container(
+        InputText(
+          keyboardType: TextInputType.number,
           height: 60,
           width: 60,
-          child: InputText(
-            textAlign: TextAlign.center,
-            hint: "-",
-            controller: controller4,
-            focusNode: focusNode4,
-            length: 1,
-            onChanged: (value) {
-              FocusScope.of(context).unfocus();
-            },
-          ),
+          textAlign: TextAlign.center,
+          hint: "-",
+          controller: controller4,
+          focusNode: focusNode4,
+          length: 1,
+          onChanged: (value) {
+            FocusScope.of(context).unfocus();
+          },
         ),
       ],
     );

@@ -23,7 +23,7 @@ class QuizFailScreen extends StatelessWidget {
                     ),
                 )),
                 Image.asset('./assets/icons/wrong.png'),
-                Text("Wrong Answer", style: textTitle),
+                Text("Wrong Answer", style: whiteTextTitle),
                 SizedBox(height: 100),
                 SharedBtn(
                   title: "Try Again",

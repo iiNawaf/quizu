@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:okoul_quiz/screens/quiz/quiz.dart';
 import 'package:okoul_quiz/style/styles.dart';
 import 'package:okoul_quiz/widgets/home/quiz_me_btn.dart';
 import 'package:okoul_quiz/widgets/home/ranking_box.dart';
 import 'package:okoul_quiz/widgets/home/total_points_box.dart';
+import 'package:okoul_quiz/widgets/shared/loading_btn.dart';
 import 'package:okoul_quiz/widgets/shared/shared_btn.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -43,11 +45,11 @@ class HomeScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyLarge),
               const SizedBox(height: 15),
               SharedBtn(
-                action: (){},
+                action: ()=> Navigator.push(context, MaterialPageRoute(builder: (context) => QuizScreen())),
                 color: primaryColor,
                 title: "Quiz Me",
                 titleColor: whiteColor
-                )
+                ),
             ],
           )
         ],

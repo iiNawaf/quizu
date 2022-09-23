@@ -19,15 +19,15 @@ class QuizResult extends StatelessWidget {
               Align(
                 alignment: Alignment.topRight,
                 child: GestureDetector(
-                  onTap: () => Navigator.pop(context),
+                  onTap: () => Navigator.popUntil(context, (route) => route.isFirst),
                   child: const CircleAvatar(
                     child: Icon(Icons.close, color: whiteColor),
                     ),
                 )),
               Image.asset('./assets/icons/hourglass.png', height: 250),
-              const Text("Time is up!", style: textTitle),
+              const Text("Time is up!", style: whiteTextTitle),
               const SizedBox(height: 30),
-              const Text("You have completed", style: subTextTitle),
+              const Text("You have completed", style: whiteSubTextTitle),
               const SizedBox(height: 5),
               Container(
                 height: 40,
@@ -36,10 +36,10 @@ class QuizResult extends StatelessWidget {
                   color: whiteColor.withOpacity(0.3),
                   borderRadius: BorderRadius.circular(5)
                 ),
-                child: const Center(child: Text("10", style: subTextTitle)),
+                child: const Center(child: Text("10", style: whiteSubTextTitle)),
               ),
               const SizedBox(height: 5),
-              const Text("Correct Answers!", style: subTextTitle),
+              const Text("Correct Answers!", style: whiteSubTextTitle),
               const SizedBox(height: 50),
               Container(
                 padding: const EdgeInsets.all(paddingValue),
