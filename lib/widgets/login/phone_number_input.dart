@@ -4,6 +4,7 @@ import 'package:okoul_quiz/style/styles.dart';
 
 class PhoneNumberInput extends StatelessWidget {
   TextEditingController controller;
+  static String countryCode = "";
   bool isError;
   PhoneNumberInput({required this.controller, required this.isError});
   @override
@@ -23,7 +24,7 @@ class PhoneNumberInput extends StatelessWidget {
               setSelectorButtonAsPrefixIcon: true
               ),
           onInputChanged: (PhoneNumber number) {
-            
+            countryCode = number.dialCode ?? "";
           },
           hintText: "5X XXX XXXX",
         ),

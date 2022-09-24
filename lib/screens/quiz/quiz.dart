@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:okoul_quiz/providers/auth_provider.dart';
 import 'package:okoul_quiz/providers/question_provider.dart';
 import 'package:okoul_quiz/screens/loading/loading.dart';
 import 'package:okoul_quiz/screens/quiz/quiz_fail.dart';
@@ -71,7 +70,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin{
     super.initState();
     startTimer();
     super.initState();
-    animation = AnimationController(vsync: this, duration: Duration(milliseconds: 500),);
+    animation = AnimationController(vsync: this, duration: const Duration(milliseconds: 500),);
     _fadeInFadeOut = Tween<double>(begin: 1.0, end: 0.0).animate(animation);
     animation.addStatusListener((status){
       if(status == AnimationStatus.completed){
@@ -96,13 +95,13 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin{
   Widget build(BuildContext context) {
     final qp = Provider.of<QuestionProvider>(context);
     return isLoading
-        ? LoadingScreen()
+        ? const LoadingScreen()
         : Scaffold(
             body: SingleChildScrollView(
               child: Column(
                 children: [
                   Container(
-                      padding: EdgeInsets.all(paddingValue),
+                      padding: const EdgeInsets.all(paddingValue),
                       height: MediaQuery.of(context).size.height * 0.5,
                       width: MediaQuery.of(context).size.width,
                       decoration: const BoxDecoration(
@@ -118,15 +117,15 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin{
                           ExitBtn(
                             action: () => showDialog(context: context, builder: (context){
                               return AlertDialog(
-                                title: Text("Quit the quiz"),
-                                content: Text("Are you sure your want to quit the quiz?"),
+                                title: const Text("Quit the quiz"),
+                                content: const Text("Are you sure your want to quit the quiz?"),
                                 actions: [
                                   TextButton(
-                                    child: Text("Yes"),
+                                    child: const Text("Yes"),
                                     onPressed: () => Navigator.popUntil(context, (route) => route.isFirst),
                                   ),
                                   TextButton(
-                                    child: Text("No"),
+                                    child: const Text("No"),
                                     onPressed: () => Navigator.pop(context),
                                   ),
                                 ],
@@ -137,11 +136,11 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin{
                           const SizedBox(height: 50),
                           QuizQuestion(
                               question:
-                                  "${qp.questionsList[qp.questionIndex].question}")
+                                  qp.questionsList[qp.questionIndex].question)
                         ],
                       )),
                   GridView.builder(
-                        padding: EdgeInsets.all(0),
+                        padding: const EdgeInsets.all(0),
                         shrinkWrap: true,
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
@@ -159,10 +158,10 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin{
                                   setState(() {
                                     _timer.cancel();
                                   });
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => QuizFailScreen()));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const QuizFailScreen()));
                                 }
                               },
-                              choice: "${qp.choices(qp.questionIndex)[index]}",
+                              choice: qp.choices(qp.questionIndex)[index],
                             ),
                           );
                         },

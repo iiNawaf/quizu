@@ -76,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 10),
                       isOtpInputVisible 
                       ? OtpInput(controller: _otpController, otp: LoginScreen.otp) 
-                      : PhoneNumberInput(controller: _phoneNumberController, isError: errorMsg == "" ? false : true,),
+                      : PhoneNumberInput(controller: _phoneNumberController, isError: errorMsg == "" ? false : true),
                       Text(errorMsg, style: const TextStyle(color: dangerColor),),
                       const SizedBox(height: 50),
                       isLoading ? LoadingBtn() : SharedBtn(
@@ -89,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           });
                           if(isOtpInputVisible){
                               if(!isFieldEmpty(LoginScreen.otp)){
-                                final result = await auth.login(LoginScreen.otp, "${_phoneNumberController.text}");
+                                final result = await auth.login(LoginScreen.otp, "${PhoneNumberInput.countryCode}${_phoneNumberController.text}");
                                 if(result == "Unauthorized! Your OTP is invalid"){
                                   setState(() {
                                     errorMsg = result;

@@ -55,7 +55,7 @@ class AuthProvider with ChangeNotifier{
       },
       body: jsonEncode(<String, String>{
         "OTP": otp,
-        "mobile": "+966${mobile.replaceAll(" ", "")}"
+        "mobile": mobile.replaceAll(" ", "")
       }),
     );
     final jsonResponseData = jsonDecode(response.body);
