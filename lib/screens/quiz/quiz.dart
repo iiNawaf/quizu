@@ -75,7 +75,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin{
     _fadeInFadeOut = Tween<double>(begin: 1.0, end: 0.0).animate(animation);
     animation.addStatusListener((status){
       if(status == AnimationStatus.completed){
-        animation.reverse();
+        Future.delayed(const Duration(milliseconds: 500), (){
+          animation.reverse();
+        });
       }
     });
   }
@@ -151,8 +153,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin{
                             child: QuizChoice(
                               action: () async{
                                 if(qp.isCorrectAnswer(index)){
+                                  await animation.forward();
                                   await qp.goToNextQuestion();
-                                  animation.forward();
                                 }else{
                                   setState(() {
                                     _timer.cancel();
@@ -169,8 +171,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin{
                     padding: const EdgeInsets.all(paddingValue),
                     child: SharedBtn(
                         action: () async {
-                          await qp.skipQuestion();
-                          animation.forward();
+                          await animation.forward();
+                          qp.skipQuestion();
                         },
                         color: Colors.grey,
                         title: "Skip",

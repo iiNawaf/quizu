@@ -10,6 +10,6 @@ class QuizQuestion extends StatefulWidget {
 class _QuizQuestionState extends State<QuizQuestion> {
   @override
   Widget build(BuildContext context) {
-    return Text(widget.question, style: Theme.of(context).textTheme.titleLarge,);
+    return Text(widget.question, style: Theme.of(context).textTheme.titleLarge, textAlign: TextAlign.center);
   }
 }
