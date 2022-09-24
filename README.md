@@ -7,4 +7,6 @@ QuizU is an application made with Flutter that allows people to join a quiz for 
 Step 1:
 
 Download or clone this repository using the link below:
-```https://github.com/iiNawaf/quizu.git```
+```
+https://github.com/iiNawaf/quizu.git
+```
