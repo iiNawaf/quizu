@@ -139,6 +139,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin{
                                   qp.questionsList[qp.questionIndex].question)
                         ],
                       )),
+                      const SizedBox(height: 30),
                   GridView.builder(
                         padding: const EdgeInsets.all(0),
                         shrinkWrap: true,
@@ -170,10 +171,15 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin{
                     padding: const EdgeInsets.all(paddingValue),
                     child: SharedBtn(
                         action: () async {
-                          await animation.forward();
-                          qp.skipQuestion();
+                          if(!qp.isSkipped){
+                            await animation.forward();
+                            qp.skipQuestion();
+                          }
+                          setState(() {
+                            qp.isSkipped = true;
+                          });
                         },
-                        color: Colors.grey,
+                        color: qp.isSkipped ? Colors.grey : Colors.amber,
                         title: "Skip",
                         titleColor: whiteColor),
                   )

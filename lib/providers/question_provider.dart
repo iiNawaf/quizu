@@ -12,6 +12,7 @@ class QuestionProvider with ChangeNotifier{
   final baseUrl = "https://quizu.okoul.com";
   List<Question> _questionsList = [];
   List<Question> get questionsList => _questionsList;
+  bool isSkipped = false;
   int questionIndex = 0;
   int currentScore = 0;
 
@@ -36,6 +37,7 @@ class QuestionProvider with ChangeNotifier{
   Future<void> resetQuiz() async{
     questionIndex = Random().nextInt(_questionsList.length);
     currentScore = 0;
+    isSkipped = false;
   }
 
   Future<void> goToNextQuestion() async{
