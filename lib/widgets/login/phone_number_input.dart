@@ -13,16 +13,19 @@ class PhoneNumberInput extends StatelessWidget {
             borderRadius: BorderRadius.circular(10), color: bgColor),
         child: InternationalPhoneNumberInput(
           textFieldController: controller,
+          maxLength: 11,
           initialValue: PhoneNumber(phoneNumber: "+966", dialCode: "+966", isoCode: "SA"),
           cursorColor: primaryColor,
           selectorConfig: const SelectorConfig(
               leadingPadding: 10,
               selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
               showFlags: true,
-              setSelectorButtonAsPrefixIcon: true),
+              setSelectorButtonAsPrefixIcon: true
+              ),
           onInputChanged: (PhoneNumber number) {
+            
           },
-          hintText: "Phone Number",
+          hintText: "5X XXX XXXX",
         ),
       );
   }

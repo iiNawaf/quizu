@@ -89,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           });
                           if(isOtpInputVisible){
                               if(!isFieldEmpty(LoginScreen.otp)){
-                                final result = await auth.login(LoginScreen.otp, "+966${_phoneNumberController.text.replaceAll(" ", "")}");
+                                final result = await auth.login(LoginScreen.otp, "${_phoneNumberController.text}");
                                 if(result == "Unauthorized! Your OTP is invalid"){
                                   setState(() {
                                     errorMsg = result;

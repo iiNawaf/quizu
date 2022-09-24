@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:okoul_quiz/app_manager/app_manager.dart';
 import 'package:okoul_quiz/providers/auth_provider.dart';
 import 'package:okoul_quiz/providers/question_provider.dart';
@@ -10,7 +11,12 @@ import 'package:okoul_quiz/style/styles.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  FlutterNativeSplash.removeAfter(wait);
   runApp(const MyApp());
+}
+
+Future wait(BuildContext context) async{
+  await Future.delayed(const Duration(seconds: 2));
 }
 
 class MyApp extends StatelessWidget {

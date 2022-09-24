@@ -35,7 +35,6 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
     : SingleChildScrollView(
       child: ListView.builder(
         physics: NeverScrollableScrollPhysics(),
-        reverse: true,
         shrinkWrap: true,
         itemCount: scoresProvider.topScores.length,
         itemBuilder: (context, index){
