@@ -49,58 +49,11 @@ flutter run
 - [Flutter Native Splash](https://pub.dev/packages/flutter_native_splash)
 
 ## Folder Structure
-formatTreeString(
-  {
-    text: 'first',
-    extra: 'extra',
-    children: [
-      {
-        text: 'second',
-        extra: 'another'
-      },
-      {
-        text: 'third',
-        children: [
-          {
-            text: 'fourth',
-            extra: 'yet'
-          },
-          {
-            text: 'fifth'
-          },
-          {
-            text: 'sixth',
-            extra: 'another',
-            children: [
-              {
-                text: 'seventh',
-                extra: 'one'
-              },
-              {
-                text: 'eighth',
-                extra: 'look',
-                children: [
-                  {
-                    text: 'ninth',
-                    extra: 'another'
-                  },
-                  {
-                    text: 'tenth',
-                    extra: 'one'
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        text: 'eleventh',
-        extra: 'yay'
-      }
-    ]
-  },
-  {
-    guideFormat: chalk.dim
-  }
-);
+```
+flutter-app/
+|- android
+|- build
+|- ios
+|- lib
+|- test
+```
