@@ -1,7 +1,5 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:okoul_quiz/providers/auth_provider.dart';
 import 'package:okoul_quiz/style/styles.dart';
 import 'package:okoul_quiz/widgets/shared/shared_btn.dart';
@@ -34,7 +32,9 @@ class MyProfileScreen extends StatelessWidget {
               ],
             ),
             SizedBox(height: 10),
-            ListView.builder(
+            auth.scoresList!.length == 0
+            ? Center(child: Text("No results."),)
+            : ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               itemCount: auth.scoresList!.length,

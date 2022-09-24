@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:intl/intl.dart';
 
 import 'package:flutter/cupertino.dart';
+import 'package:okoul_quiz/app_manager/app_manager.dart';
 import 'package:okoul_quiz/models/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -81,7 +82,6 @@ class AuthProvider with ChangeNotifier{
       });
       await storage.setString("userInfo", _loggedInUserInfo);
       }
-
       await storage.setString("token", jsonResponseData['token']);
       notifyListeners();
       return jsonResponseData;
@@ -148,6 +148,7 @@ class AuthProvider with ChangeNotifier{
       scoresList!.add(encodedScore);
       await storage.setStringList("scores", scoresList!);
     }
+    notifyListeners();
     }
   }
 
@@ -155,6 +156,7 @@ class AuthProvider with ChangeNotifier{
     final storage = await SharedPreferences.getInstance();
     storage.clear();
     _loggedInUser = null;
+    AppManager.currentIndex = 0;
     notifyListeners();
   }
 }

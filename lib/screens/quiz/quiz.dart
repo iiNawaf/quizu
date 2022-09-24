@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:okoul_quiz/providers/auth_provider.dart';
@@ -30,7 +29,6 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin{
         isLoading = true;
       });
       final qp = Provider.of<QuestionProvider>(context, listen: false);
-      final ap = Provider.of<AuthProvider>(context, listen: false);
       await qp.fetchQuestions();
       await qp.resetQuiz();
       setState(() {
@@ -45,7 +43,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin{
   int _minutes = 1;
 
   void startTimer() {
-    const oneSec = Duration(seconds: 1);
+    const oneSec = Duration(milliseconds: 50);
     _timer = Timer.periodic(
       oneSec,
       (Timer timer) {

@@ -32,6 +32,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   @override
+  void dispose() {
+    _nameController.clear();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final auth = Provider.of<AuthProvider>(context);
     return GestureDetector(
@@ -43,17 +49,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
         body: Form(
           child: Column(
             children: [
-              const SizedBox(height: 80),
+              const SizedBox(height: 50),
               Image.asset(
-                'assets/icons/ideas.png',
-                height: 100,
+                'assets/images/login.png',
+                height: 350,
               ),
-              const Text(
-                "QuizU",
-                style: TextStyle(
-                    fontSize: 50, fontWeight: FontWeight.bold, color: whiteColor),
-              ),
-              const SizedBox(height: 20),
               Expanded(
                 child: Container(
                   padding: const EdgeInsets.all(paddingValue),
@@ -67,8 +67,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     shrinkWrap: true,
                     children: [
                       Text("Create Account", style: blackTextTitle),
-                      const SizedBox(height: 60),
-                      Text("Enter your name to continue...", style: blackSubTextTitle),
+                      const SizedBox(height: 30),
+                      Text("Name", style: Theme.of(context).textTheme.titleMedium),
                       const SizedBox(height: 10),
                       InputText(hint: "Enter your name", controller: _nameController),
                       Text(errorMsg, style: TextStyle(color: dangerColor),),

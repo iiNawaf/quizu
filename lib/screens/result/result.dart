@@ -44,8 +44,7 @@ class _QuizResultState extends State<QuizResultScreen> {
               ExitBtn(action: () {
                 Navigator.popUntil(context, (route) => route.isFirst);
               }),
-              Image.asset('./assets/icons/hourglass.png', height: 250),
-              const Text("Time is up!", style: whiteTextTitle),
+              Image.asset('./assets/images/time.png'),
               const SizedBox(height: 30),
               const Text("You have completed", style: whiteSubTextTitle),
               const SizedBox(height: 5),

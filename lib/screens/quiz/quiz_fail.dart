@@ -17,9 +17,11 @@ class QuizFailScreen extends StatelessWidget {
             children: [
               SizedBox(height: 50),
               ExitBtn(action: ()=> Navigator.popUntil(context, (route) => route.isFirst),),
-                Image.asset('./assets/icons/wrong.png'),
+              SizedBox(height: 50),
+                Image.asset('./assets/images/wrong.png'),
+                SizedBox(height: 20),
                 Text("Wrong Answer", style: whiteTextTitle),
-                SizedBox(height: 100),
+                SizedBox(height: 80),
                 SharedBtn(
                   title: "Try Again",
                   titleColor: whiteColor,

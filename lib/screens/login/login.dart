@@ -37,6 +37,16 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
+  void dispose() {
+    _phoneNumberController.clear();
+    _otp1Controller.clear();
+    _otp2Controller.clear();
+    _otp3Controller.clear();
+    _otp4Controller.clear();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final auth = Provider.of<AuthProvider>(context);
     return GestureDetector(
@@ -48,17 +58,11 @@ class _LoginScreenState extends State<LoginScreen> {
         body: Form(
           child: Column(
             children: [
-              const SizedBox(height: 80),
+              const SizedBox(height: 50),
               Image.asset(
-                'assets/icons/ideas.png',
-                height: 100,
+                'assets/images/login.png',
+                height: 350,
               ),
-              const Text(
-                "QuizU",
-                style: TextStyle(
-                    fontSize: 50, fontWeight: FontWeight.bold, color: whiteColor),
-              ),
-              const SizedBox(height: 20),
               Expanded(
                 child: Container(
                   padding: const EdgeInsets.all(paddingValue),
@@ -72,13 +76,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     shrinkWrap: true,
                     children: [
                       Text("Login", style: blackTextTitle),
-                      const SizedBox(height: 60),
-                      Text(isOtpInputVisible ? "Verification Code" : "Phone number", style: blackSubTextTitle),
+                      const SizedBox(height: 30),
+                      Text(isOtpInputVisible ? "Verification Code" : "Mobile", style: Theme.of(context).textTheme.titleMedium),
                       const SizedBox(height: 10),
                       isOtpInputVisible 
                       ? OtpInput(controller1: _otp1Controller, controller2: _otp2Controller, controller3: _otp3Controller, controller4: _otp4Controller,) 
                       : PhoneNumberInput(controller: _phoneNumberController, isError: errorMsg == "" ? false : true,),
-                      Text(errorMsg, style: TextStyle(color: dangerColor),),
+                      Text(errorMsg, style: const TextStyle(color: dangerColor),),
                       const SizedBox(height: 50),
                       isLoading ? LoadingBtn() : SharedBtn(
                         color: primaryColor, 
@@ -92,9 +96,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           if(isOtpInputVisible){
                               if(!isFieldEmpty(otp)){
                                 final result = await auth.login(otp, "+966${_phoneNumberController.text.replaceAll(" ", "")}");
-                                setState(() {
-                                  errorMsg = result;
-                                });
+                                if(result == "Unauthorized! Your OTP is invalid"){
+                                  setState(() {
+                                    errorMsg = result;
+                                  });
+                                }
                               }else{
                                 setState(() {
                                   isLoading = false;
