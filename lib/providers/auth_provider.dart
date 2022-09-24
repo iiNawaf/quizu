@@ -10,7 +10,7 @@ class AuthProvider with ChangeNotifier{
   final baseUrl = "https://quizu.okoul.com";
   User? _loggedInUser;
   User? get loggedInUser => _loggedInUser;
-  Map<String, String> scoresMap = {};
+  Map<dynamic, dynamic> scoresMap = {};
   List<String>? scoresList = [];
 
   Future<dynamic> autoLogin() async{

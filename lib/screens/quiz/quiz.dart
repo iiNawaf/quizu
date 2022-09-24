@@ -45,7 +45,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin{
   int _minutes = 1;
 
   void startTimer() {
-    const oneSec = Duration(milliseconds: 20);
+    const oneSec = Duration(seconds: 1);
     _timer = Timer.periodic(
       oneSec,
       (Timer timer) {
@@ -53,7 +53,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin{
           setState(() {
             _timer.cancel();
           });
-          Navigator.push(context, MaterialPageRoute(builder: (context) => QuizResult()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => QuizResultScreen()));
         } else if (_seconds == 0) {
           setState(() {
             _minutes -= 1;
@@ -95,7 +95,6 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
     final qp = Provider.of<QuestionProvider>(context);
-    final auth = Provider.of<AuthProvider>(context);
     return isLoading
         ? LoadingScreen()
         : Scaffold(
@@ -146,7 +145,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin{
                         shrinkWrap: true,
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2, childAspectRatio: 2.7),
+                                crossAxisCount: 2, childAspectRatio: 2.5),
                         itemCount: 4,
                         itemBuilder: (context, index) {
                           return FadeTransition(

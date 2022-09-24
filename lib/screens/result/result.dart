@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:okoul_quiz/providers/auth_provider.dart';
 import 'package:okoul_quiz/providers/question_provider.dart';
 import 'package:okoul_quiz/style/styles.dart';
-import 'package:okoul_quiz/widgets/result/share_options.dart';
 import 'package:okoul_quiz/widgets/shared/background.dart';
 import 'package:okoul_quiz/widgets/shared/exit_btn.dart';
 import 'package:okoul_quiz/widgets/shared/shared_btn.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
-class QuizResult extends StatefulWidget {
+class QuizResultScreen extends StatefulWidget {
   @override
-  State<QuizResult> createState() => _QuizResultState();
+  State<QuizResultScreen> createState() => _QuizResultState();
 }
 
-class _QuizResultState extends State<QuizResult> {
+class _QuizResultState extends State<QuizResultScreen> {
   bool isInit = true;
   bool isLoading = false;
   @override
@@ -72,13 +72,13 @@ class _QuizResultState extends State<QuizResult> {
                   children: [
                     Text("Share your result", style: Theme.of(context).textTheme.titleLarge),
                     const SizedBox(height: 20),
-                    const ShareOptions(),
-                    const SizedBox(height: 20),
                     SharedBtn(
                       title: "Share",
                       titleColor: whiteColor,
                       color: primaryColor,
-                      action: (){},
+                      action: (){
+                        Share.share("I answered ${qp.currentScore} correct answers in QuizU!", subject: "Subject");
+                      },
                     ),
                   ],
                 ),

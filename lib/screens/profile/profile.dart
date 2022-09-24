@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:okoul_quiz/providers/auth_provider.dart';
 import 'package:okoul_quiz/style/styles.dart';
 import 'package:okoul_quiz/widgets/shared/shared_btn.dart';
@@ -6,8 +9,6 @@ import 'package:okoul_quiz/widgets/shared/shared_list_tile.dart';
 import 'package:provider/provider.dart';
 
 class MyProfileScreen extends StatelessWidget {
-  const MyProfileScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     final auth = Provider.of<AuthProvider>(context);
@@ -38,10 +39,11 @@ class MyProfileScreen extends StatelessWidget {
               physics: NeverScrollableScrollPhysics(),
               itemCount: auth.scoresList!.length,
               itemBuilder: (context, index){
+                int reversedIndex = auth.scoresList!.length - 1 - index;
                 return SharedListTile(
                   index: index+1,
-              title: "${auth.scoresList![index].split('":"')[0].substring(2)}",
-              trailing: "${auth.scoresList![index].split('":"')[1].lastIndexOf("}")}",
+              title: "${auth.scoresList![reversedIndex].split('":"')[0].substring(2)}",
+              trailing: "${auth.scoresList![reversedIndex].split('":"')[1].substring(0,1)}",
             );
               },
             )
