@@ -14,10 +14,7 @@ class QuizMeBtn extends StatelessWidget {
             borderRadius: BorderRadius.circular(10), color: primaryColor),
         child: const Center(
           child: Text("Quiz Me",
-              style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: whiteColor)),
+              style: whiteTextTitle),
         ),
       ),
     );

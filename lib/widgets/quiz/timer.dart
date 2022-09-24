@@ -20,7 +20,7 @@ class _QuizTimerState extends State<QuizTimer> {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100),
           border: Border.all(color: primaryColor)),
-      child: Center(child: Text(widget.secs < 10 ? "0${widget.mins}:0${widget.secs}" : "0${widget.mins}:${widget.secs}", style: TextStyle(fontSize: 40))),
+      child: Center(child: Text(widget.secs < 10 ? "0${widget.mins}:0${widget.secs}" : "0${widget.mins}:${widget.secs}", style: blackTextTitle)),
     );
   }
 }

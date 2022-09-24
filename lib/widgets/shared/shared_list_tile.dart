@@ -19,10 +19,10 @@ class SharedListTile extends StatelessWidget {
           contentPadding: EdgeInsets.all(paddingValue),
           leading: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: CircleAvatar(child: Text(index.toString(), style: Theme.of(context).textTheme.titleMedium,)),
+            child: CircleAvatar(backgroundColor: primaryColor,child: Text(index.toString(), style: whiteSubTextTitle)),
           ),
-          title: Text(title),
-          trailing: Text(trailing.toString(), style: Theme.of(context).textTheme.titleMedium),
+          title: Text(title, style: Theme.of(context).textTheme.titleMedium,),
+          trailing: Text(trailing.toString(), style: Theme.of(context).textTheme.titleSmall),
         ),
       ),
     );

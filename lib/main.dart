@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => QuestionProvider()),
       ],
       child: MaterialApp(
-        title: 'Okoul Quiz',
+        title: 'QuizU',
         debugShowCheckedModeBanner: false,
         theme: appTheme,
         home: Consumer<AuthProvider>(
