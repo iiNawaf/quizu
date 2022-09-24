@@ -15,7 +15,8 @@ class AuthProvider with ChangeNotifier{
   List<String>? scoresList = [];
 
   Future<dynamic> autoLogin() async{
-    final storage = await SharedPreferences.getInstance();
+    try{
+      final storage = await SharedPreferences.getInstance();
     if(storage.containsKey("scores")){
       scoresList = storage.getStringList("scores");
     }
@@ -35,18 +36,18 @@ class AuthProvider with ChangeNotifier{
         name: localUserInfo['name'],
         mobile: localUserInfo['mobile'],
       );
-      print(_loggedInUser!.mobile);
-      print(_loggedInUser!.name);
       return _loggedInUser;
     }
-    }else{
-      print("nope");
+    }
+    }catch(e){
+      return "Error logging: $e";
     }
 
   }
 
   Future<dynamic> login(String otp, String mobile) async{
-    final url = Uri.parse("$baseUrl/Login");
+    try{
+      final url = Uri.parse("$baseUrl/Login");
     final response = await http.post(
       url,
       headers: <String, String>{
@@ -87,14 +88,18 @@ class AuthProvider with ChangeNotifier{
       return jsonResponseData;
     }else{
         if(jsonResponseData['success'] == false){
-          print(jsonResponseData['message']);
           return jsonResponseData['message'];
       }
     }
+    }catch(e){
+      return "Error logging in: $e";
+    }
+    
   }
 
   Future<dynamic> registerName(String name) async{
-    final storage = await SharedPreferences.getInstance();
+    try{
+      final storage = await SharedPreferences.getInstance();
     if(storage.containsKey("token")){
     final url = Uri.parse("$baseUrl/Name");
     final response = await http.post(
@@ -109,7 +114,6 @@ class AuthProvider with ChangeNotifier{
     );
     final jsonResponseData = jsonDecode(response.body);
     if(response.statusCode == 201){
-      print(jsonResponseData['name']);
       _loggedInUser = User(
         name: jsonResponseData['name'],
         mobile: jsonResponseData['mobile'],
@@ -123,10 +127,14 @@ class AuthProvider with ChangeNotifier{
       return jsonResponseData;
     }
     }
+    }catch(e){
+      return "Error registering name $e";
+    }
   }
 
   Future<dynamic> submitScore(String score) async{
-    final storage = await SharedPreferences.getInstance();
+    try{
+      final storage = await SharedPreferences.getInstance();
     if(storage.containsKey("token")){
     final url = Uri.parse("$baseUrl/Score");
     final response = await http.post(
@@ -150,12 +158,16 @@ class AuthProvider with ChangeNotifier{
     }
     notifyListeners();
     }
+    }catch(e){
+      return "Error submitting score";
+    }
   }
 
   void logout() async {
     final storage = await SharedPreferences.getInstance();
     storage.clear();
     _loggedInUser = null;
+    scoresList = [];
     AppManager.currentIndex = 0;
     notifyListeners();
   }

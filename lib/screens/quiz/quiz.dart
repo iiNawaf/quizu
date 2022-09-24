@@ -5,10 +5,10 @@ import 'package:okoul_quiz/providers/auth_provider.dart';
 import 'package:okoul_quiz/providers/question_provider.dart';
 import 'package:okoul_quiz/screens/loading/loading.dart';
 import 'package:okoul_quiz/screens/quiz/quiz_fail.dart';
+import 'package:okoul_quiz/screens/quiz/quiz_result.dart';
 import 'package:okoul_quiz/style/styles.dart';
 import 'package:okoul_quiz/widgets/quiz/choice.dart';
 import 'package:okoul_quiz/widgets/quiz/question.dart';
-import 'package:okoul_quiz/screens/result/result.dart';
 import 'package:okoul_quiz/widgets/quiz/timer.dart';
 import 'package:okoul_quiz/widgets/shared/exit_btn.dart';
 import 'package:okoul_quiz/widgets/shared/shared_btn.dart';
@@ -43,7 +43,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin{
   int _minutes = 1;
 
   void startTimer() {
-    const oneSec = Duration(milliseconds: 50);
+    const oneSec = Duration(seconds: 1);
     _timer = Timer.periodic(
       oneSec,
       (Timer timer) {
@@ -153,7 +153,6 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin{
                                 if(qp.isCorrectAnswer(index)){
                                   await qp.goToNextQuestion();
                                   animation.forward();
-                                  print("Correct ${qp.currentScore}");
                                 }else{
                                   setState(() {
                                     _timer.cancel();

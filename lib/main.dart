@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => AuthProvider()),
         ChangeNotifierProvider(create: (context) => ScoresProvider()),
-        ChangeNotifierProvider(create: (context) => QuestionProvider())
+        ChangeNotifierProvider(create: (context) => QuestionProvider()),
       ],
       child: MaterialApp(
         title: 'Okoul Quiz',
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
           future: authProvider.autoLogin(),
           builder: (context, snapshot){
             return snapshot.connectionState == ConnectionState.done 
-            ? snapshot.hasData 
+            ? snapshot.hasData
             ? authProvider.loggedInUser!.name == null 
             ? SignUpScreen() : AppManager() 
             : LoginScreen() 

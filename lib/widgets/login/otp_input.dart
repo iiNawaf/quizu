@@ -13,11 +13,9 @@ class OtpInput extends StatelessWidget {
         controller: controller,
         onChanged: (pin) {
           LoginScreen.otp = pin;
-          print("Changed: " + pin);
         },
         onCompleted: (pin) {
           LoginScreen.otp = pin;
-          print("Completed: " + pin);
         });
   }
 }

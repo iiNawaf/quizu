@@ -41,9 +41,7 @@ class _QuizResultState extends State<QuizResultScreen> {
           child: Column(
             children: [
               SizedBox(height: 50),
-              ExitBtn(action: () {
-                Navigator.popUntil(context, (route) => route.isFirst);
-              }),
+              ExitBtn(action: () => Navigator.popUntil(context, (route) => route.isFirst)),
               Image.asset('./assets/images/time.png'),
               const SizedBox(height: 30),
               const Text("You have completed", style: whiteSubTextTitle),
