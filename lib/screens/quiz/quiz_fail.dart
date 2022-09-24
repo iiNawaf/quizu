@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:okoul_quiz/screens/quiz/quiz.dart';
 import 'package:okoul_quiz/style/styles.dart';
 import 'package:okoul_quiz/widgets/shared/background.dart';
+import 'package:okoul_quiz/widgets/shared/exit_btn.dart';
 import 'package:okoul_quiz/widgets/shared/shared_btn.dart';
 
 class QuizFailScreen extends StatelessWidget {
@@ -14,14 +16,7 @@ class QuizFailScreen extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(height: 50),
-              Align(
-                alignment: Alignment.topRight,
-                child: GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: const CircleAvatar(
-                    child: Icon(Icons.close, color: whiteColor),
-                    ),
-                )),
+              ExitBtn(action: ()=> Navigator.popUntil(context, (route) => route.isFirst),),
                 Image.asset('./assets/icons/wrong.png'),
                 Text("Wrong Answer", style: whiteTextTitle),
                 SizedBox(height: 100),
@@ -29,7 +24,10 @@ class QuizFailScreen extends StatelessWidget {
                   title: "Try Again",
                   titleColor: whiteColor,
                   color: primaryColor,
-                  action: (){},
+                  action: (){
+                    Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => QuizScreen()));
+                  },
                 )
             ],
           ),

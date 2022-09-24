@@ -1,29 +1,49 @@
 
 import 'package:flutter/material.dart';
+import 'package:okoul_quiz/providers/auth_provider.dart';
+import 'package:okoul_quiz/providers/question_provider.dart';
 import 'package:okoul_quiz/style/styles.dart';
 import 'package:okoul_quiz/widgets/result/share_options.dart';
 import 'package:okoul_quiz/widgets/shared/background.dart';
+import 'package:okoul_quiz/widgets/shared/exit_btn.dart';
 import 'package:okoul_quiz/widgets/shared/shared_btn.dart';
+import 'package:provider/provider.dart';
 
-class QuizResult extends StatelessWidget {
-  const QuizResult({Key? key}) : super(key: key);
+class QuizResult extends StatefulWidget {
+  @override
+  State<QuizResult> createState() => _QuizResultState();
+}
 
+class _QuizResultState extends State<QuizResult> {
+  bool isInit = true;
+  bool isLoading = false;
+  @override
+  void didChangeDependencies() async{
+    if(isInit){
+      setState(() {
+        isLoading = true;
+      });
+      final questionProvider = Provider.of<QuestionProvider>(context, listen: false);
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+      await authProvider.submitScore(questionProvider.currentScore.toString());
+      setState(() {
+        isLoading = false;
+      });
+    }
+    super.didChangeDependencies();
+  }
   @override
   Widget build(BuildContext context) {
+    final qp = Provider.of<QuestionProvider>(context);
     return Scaffold(
       body: Background(
         child: Center(
           child: Column(
             children: [
               SizedBox(height: 50),
-              Align(
-                alignment: Alignment.topRight,
-                child: GestureDetector(
-                  onTap: () => Navigator.popUntil(context, (route) => route.isFirst),
-                  child: const CircleAvatar(
-                    child: Icon(Icons.close, color: whiteColor),
-                    ),
-                )),
+              ExitBtn(action: () {
+                Navigator.popUntil(context, (route) => route.isFirst);
+              }),
               Image.asset('./assets/icons/hourglass.png', height: 250),
               const Text("Time is up!", style: whiteTextTitle),
               const SizedBox(height: 30),
@@ -36,7 +56,7 @@ class QuizResult extends StatelessWidget {
                   color: whiteColor.withOpacity(0.3),
                   borderRadius: BorderRadius.circular(5)
                 ),
-                child: const Center(child: Text("10", style: whiteSubTextTitle)),
+                child: Center(child: Text("${qp.currentScore.toString()}", style: whiteSubTextTitle)),
               ),
               const SizedBox(height: 5),
               const Text("Correct Answers!", style: whiteSubTextTitle),

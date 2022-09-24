@@ -6,6 +6,7 @@ const whiteColor = Color(0xffffffff);
 const textColor = Color(0xff797979);
 const paddingValue = 15.0;
 const dangerColor = Color(0xffbb2124);
+const successColor = Color(0xff22bb33);
 const whiteTextTitle = TextStyle(fontSize: 25, color: whiteColor, fontWeight: FontWeight.bold);
 const whiteSubTextTitle = TextStyle(fontSize: 20, color: whiteColor, fontWeight: FontWeight.bold);
 const blackTextTitle = TextStyle(fontSize: 25, color: textColor, fontWeight: FontWeight.bold);

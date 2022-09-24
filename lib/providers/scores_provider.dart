@@ -27,7 +27,6 @@ class ScoresProvider with ChangeNotifier{
       if(response.statusCode == 200){
         _topScores = jsonResponseData.map<Score>((json) => Score.fromJson(json)).toList();
       }
-      print("hi");
       notifyListeners();
     }
 

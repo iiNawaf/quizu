@@ -41,8 +41,8 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
         itemBuilder: (context, index){
           return SharedListTile(
             index: index+1,
-            name: scoresProvider.topScores[index].name,
-            score: scoresProvider.topScores[index].score,
+            title: scoresProvider.topScores[index].name,
+            trailing: scoresProvider.topScores[index].score.toString(),
           );
         }
         ),

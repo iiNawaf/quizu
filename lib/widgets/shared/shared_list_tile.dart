@@ -3,9 +3,9 @@ import 'package:okoul_quiz/style/styles.dart';
 
 class SharedListTile extends StatelessWidget {
   int index;
-  String name;
-  int score;
-  SharedListTile({required this.name, required this.score, required this.index});
+  String title;
+  String trailing;
+  SharedListTile({required this.title, required this.trailing, required this.index});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -16,12 +16,13 @@ class SharedListTile extends StatelessWidget {
           color: whiteColor,
         ),
         child: ListTile(
+          contentPadding: EdgeInsets.all(paddingValue),
           leading: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(index.toString(), style: Theme.of(context).textTheme.titleMedium,),
+            child: CircleAvatar(child: Text(index.toString(), style: Theme.of(context).textTheme.titleMedium,)),
           ),
-          title: Text(name),
-          trailing: Text(score.toString()),
+          title: Text(title),
+          trailing: Text(trailing.toString(), style: Theme.of(context).textTheme.titleMedium),
         ),
       ),
     );

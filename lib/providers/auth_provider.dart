@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:okoul_quiz/models/user.dart';
@@ -9,9 +10,14 @@ class AuthProvider with ChangeNotifier{
   final baseUrl = "https://quizu.okoul.com";
   User? _loggedInUser;
   User? get loggedInUser => _loggedInUser;
+  Map<String, String> scoresMap = {};
+  List<String>? scoresList = [];
 
   Future<dynamic> autoLogin() async{
     final storage = await SharedPreferences.getInstance();
+    if(storage.containsKey("scores")){
+      scoresList = storage.getStringList("scores");
+    }
     if(storage.containsKey("token")){
       final url = Uri.parse("$baseUrl/Token");
       final response = await http.get(
@@ -28,6 +34,7 @@ class AuthProvider with ChangeNotifier{
         name: localUserInfo['name'],
         mobile: localUserInfo['mobile'],
       );
+      print(_loggedInUser!.mobile);
       print(_loggedInUser!.name);
       return _loggedInUser;
     }
@@ -116,7 +123,32 @@ class AuthProvider with ChangeNotifier{
       return jsonResponseData;
     }
     }
-    
+  }
+
+  Future<dynamic> submitScore(String score) async{
+    final storage = await SharedPreferences.getInstance();
+    if(storage.containsKey("token")){
+    final url = Uri.parse("$baseUrl/Score");
+    final response = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ${storage.getString("token")}'
+      },
+      body: jsonEncode(<String, String>{
+        "score": score,
+      }),
+    );
+    if(response.statusCode == 201){
+      String formattedDate = DateFormat.yMEd().add_jms().format(DateTime.now());
+      scoresMap = <String, String>{
+        formattedDate : score
+      };
+      final encodedScore = jsonEncode(scoresMap);
+      scoresList!.add(encodedScore);
+      await storage.setStringList("scores", scoresList!);
+    }
+    }
   }
 
   void logout() async {

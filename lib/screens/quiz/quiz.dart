@@ -2,13 +2,16 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:okoul_quiz/providers/auth_provider.dart';
 import 'package:okoul_quiz/providers/question_provider.dart';
 import 'package:okoul_quiz/screens/loading/loading.dart';
+import 'package:okoul_quiz/screens/quiz/quiz_fail.dart';
 import 'package:okoul_quiz/style/styles.dart';
 import 'package:okoul_quiz/widgets/quiz/choice.dart';
 import 'package:okoul_quiz/widgets/quiz/question.dart';
 import 'package:okoul_quiz/screens/result/result.dart';
 import 'package:okoul_quiz/widgets/quiz/timer.dart';
+import 'package:okoul_quiz/widgets/shared/exit_btn.dart';
 import 'package:okoul_quiz/widgets/shared/shared_btn.dart';
 import 'package:provider/provider.dart';
 
@@ -17,29 +20,32 @@ class QuizScreen extends StatefulWidget {
   State<QuizScreen> createState() => _QuizScreenState();
 }
 
-class _QuizScreenState extends State<QuizScreen> {
+class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin{
   bool isInit = true;
   bool isLoading = false;
   @override
-  void didChangeDependencies() async{
-    if(isInit){
+  void didChangeDependencies() async {
+    if (isInit) {
       setState(() {
         isLoading = true;
       });
-      final questionProvider = Provider.of<QuestionProvider>(context, listen: false);
-      await questionProvider.fetchQuestions();
+      final qp = Provider.of<QuestionProvider>(context, listen: false);
+      final ap = Provider.of<AuthProvider>(context, listen: false);
+      await qp.fetchQuestions();
+      await qp.resetQuiz();
       setState(() {
         isLoading = false;
       });
     }
     super.didChangeDependencies();
   }
+
   late Timer _timer;
   int _seconds = 60;
   int _minutes = 1;
 
   void startTimer() {
-    const oneSec = const Duration(seconds: 1);
+    const oneSec = Duration(milliseconds: 20);
     _timer = Timer.periodic(
       oneSec,
       (Timer timer) {
@@ -47,14 +53,13 @@ class _QuizScreenState extends State<QuizScreen> {
           setState(() {
             _timer.cancel();
           });
-        } else if(_seconds == 0) {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => QuizResult()));
+        } else if (_seconds == 0) {
           setState(() {
             _minutes -= 1;
             _seconds = 60;
-            Navigator.push(context, MaterialPageRoute(builder: (context) => QuizResult()));
           });
-          
-        }else{
+        } else {
           setState(() {
             _seconds--;
           });
@@ -62,78 +67,122 @@ class _QuizScreenState extends State<QuizScreen> {
       },
     );
   }
+
   @override
   void initState() {
     super.initState();
     startTimer();
+    super.initState();
+    animation = AnimationController(vsync: this, duration: Duration(milliseconds: 500),);
+    _fadeInFadeOut = Tween<double>(begin: 1.0, end: 0.0).animate(animation);
+    animation.addStatusListener((status){
+      if(status == AnimationStatus.completed){
+        animation.reverse();
+      }
+    });
   }
+
   @override
   void dispose() {
     _timer.cancel();
+    animation.dispose();
     super.dispose();
   }
 
-  int i = 0;
+  late AnimationController animation;
+  late Animation<double> _fadeInFadeOut;
+
   @override
   Widget build(BuildContext context) {
-    final questionProvider = Provider.of<QuestionProvider>(context);
-    return isLoading 
-    ? LoadingScreen() 
-    : Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-                padding: EdgeInsets.all(paddingValue),
-                height: MediaQuery.of(context).size.height * 0.5,
-                width: MediaQuery.of(context).size.width,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20),
-                  ),
-                  color: whiteColor,
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    QuizTimer(mins: _minutes, secs: _seconds),
-                    const SizedBox(height: 50),
-                    QuizQuestion(question: "${questionProvider.questionsList[i].question}")
-                  ],
-                )),
-            GridView.builder(
-              shrinkWrap: true,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 2.7
-                ),
-              itemCount: 4,
-              itemBuilder: (context, index){
-                return QuizChoice(
-                  action: (){
-                    print(questionProvider.questionsList[i].answers[index]);
-                    print(questionProvider.questionsList[i].correctAnswer);
-                  },
-                  choice: "${questionProvider.questionsList[i].answers[index]}",
-                );
-              },
+    final qp = Provider.of<QuestionProvider>(context);
+    final auth = Provider.of<AuthProvider>(context);
+    return isLoading
+        ? LoadingScreen()
+        : Scaffold(
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                      padding: EdgeInsets.all(paddingValue),
+                      height: MediaQuery.of(context).size.height * 0.5,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(20),
+                          bottomRight: Radius.circular(20),
+                        ),
+                        color: whiteColor,
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ExitBtn(
+                            action: () => showDialog(context: context, builder: (context){
+                              return AlertDialog(
+                                title: Text("Quit the quiz"),
+                                content: Text("Are you sure your want to quit the quiz?"),
+                                actions: [
+                                  TextButton(
+                                    child: Text("Yes"),
+                                    onPressed: () => Navigator.popUntil(context, (route) => route.isFirst),
+                                  ),
+                                  TextButton(
+                                    child: Text("No"),
+                                    onPressed: () => Navigator.pop(context),
+                                  ),
+                                ],
+                              );
+                            })
+                          ),
+                          QuizTimer(mins: _minutes, secs: _seconds),
+                          const SizedBox(height: 50),
+                          QuizQuestion(
+                              question:
+                                  "${qp.questionsList[qp.questionIndex].question}")
+                        ],
+                      )),
+                  GridView.builder(
+                        padding: EdgeInsets.all(0),
+                        shrinkWrap: true,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2, childAspectRatio: 2.7),
+                        itemCount: 4,
+                        itemBuilder: (context, index) {
+                          return FadeTransition(
+                            opacity: _fadeInFadeOut,
+                            child: QuizChoice(
+                              action: () async{
+                                if(qp.isCorrectAnswer(index)){
+                                  await qp.goToNextQuestion();
+                                  animation.forward();
+                                  print("Correct ${qp.currentScore}");
+                                }else{
+                                  setState(() {
+                                    _timer.cancel();
+                                  });
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => QuizFailScreen()));
+                                }
+                              },
+                              choice: "${qp.choices(qp.questionIndex)[index]}",
+                            ),
+                          );
+                        },
+                      ),
+                  Padding(
+                    padding: const EdgeInsets.all(paddingValue),
+                    child: SharedBtn(
+                        action: () async {
+                          await qp.skipQuestion();
+                          animation.forward();
+                        },
+                        color: Colors.grey,
+                        title: "Skip",
+                        titleColor: whiteColor),
+                  )
+                ],
+              ),
             ),
-            SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.all(paddingValue),
-              child: SharedBtn(
-                action: (){
-                  i = Random().nextInt(questionProvider.questionsList.length);
-                },
-                color: Colors.grey,
-                title: "Skip",
-                titleColor: whiteColor
-                ),
-            )
-          ],
-        ),
-      ),
-    );
+          );
   }
 }

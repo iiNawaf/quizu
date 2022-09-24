@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:okoul_quiz/providers/auth_provider.dart';
 import 'package:okoul_quiz/style/styles.dart';
 import 'package:okoul_quiz/widgets/shared/shared_btn.dart';
+import 'package:okoul_quiz/widgets/shared/shared_list_tile.dart';
 import 'package:provider/provider.dart';
 
 class MyProfileScreen extends StatelessWidget {
@@ -32,7 +33,18 @@ class MyProfileScreen extends StatelessWidget {
               ],
             ),
             SizedBox(height: 10),
-            // SharedListTile()
+            ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: auth.scoresList!.length,
+              itemBuilder: (context, index){
+                return SharedListTile(
+                  index: index+1,
+              title: "${auth.scoresList![index].split('":"')[0].substring(2)}",
+              trailing: "${auth.scoresList![index].split('":"')[1].lastIndexOf("}")}",
+            );
+              },
+            )
           ],
         ),
       ),

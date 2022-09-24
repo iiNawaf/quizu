@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:okoul_quiz/providers/question_provider.dart';
 import 'package:okoul_quiz/style/styles.dart';
+import 'package:provider/provider.dart';
 
 class QuizChoice extends StatelessWidget {
   String choice;
@@ -7,8 +9,9 @@ class QuizChoice extends StatelessWidget {
   QuizChoice({required this.choice, required this.action});
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: action,
+    final qp = Provider.of<QuestionProvider>(context);
+    return TextButton(
+      onPressed: action,
       child: Padding(
         padding: const EdgeInsets.all(paddingValue),
         child: Container(

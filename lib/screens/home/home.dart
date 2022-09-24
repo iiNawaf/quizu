@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:okoul_quiz/providers/auth_provider.dart';
 import 'package:okoul_quiz/screens/quiz/quiz.dart';
 import 'package:okoul_quiz/style/styles.dart';
-import 'package:okoul_quiz/widgets/home/quiz_me_btn.dart';
 import 'package:okoul_quiz/widgets/home/ranking_box.dart';
 import 'package:okoul_quiz/widgets/home/total_points_box.dart';
-import 'package:okoul_quiz/widgets/shared/loading_btn.dart';
 import 'package:okoul_quiz/widgets/shared/shared_btn.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final auth = Provider.of<AuthProvider>(context);
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Hi Username", style: Theme.of(context).textTheme.titleSmall),
+          Text("Hi ${auth.loggedInUser!.name}", style: Theme.of(context).textTheme.titleSmall),
           Text("Are you ready to compete?",
               style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: 15),
