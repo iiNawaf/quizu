@@ -37,3 +37,21 @@ flutter run
 
 ## Libraries Used:
 - [Intl Phone Number Input](https://pub.dev/packages/intl_phone_number_input)
+- [Provider](https://pub.dev/packages/provider)
+- [http](https://pub.dev/packages/http)
+- [Shared preferences](https://pub.dev/packages/shared_preferences)
+- [Flutter Spinkit](https://pub.dev/packages/flutter_spinkit)
+- [Phone Number](https://pub.dev/packages/phone_number)
+- [intl](https://pub.dev/packages/intl)
+- [Share Plus](https://pub.dev/packages/share_plus)
+- [Otp Text Field](https://pub.dev/packages/otp_text_field)
+- [Flutter Launcher Icons](https://pub.dev/packages/flutter_launcher_icons)
+- [Flutter Native Splash](https://pub.dev/packages/flutter_native_splash)
+
+## Folder Structure
+flutter-app/
+|- android
+|- build
+|- ios
+|- lib
+|- test
