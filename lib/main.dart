@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:okoul_quiz/app_manager/app_manager.dart';
-import 'package:okoul_quiz/models/user.dart';
 import 'package:okoul_quiz/providers/auth_provider.dart';
 import 'package:okoul_quiz/providers/question_provider.dart';
 import 'package:okoul_quiz/providers/scores_provider.dart';

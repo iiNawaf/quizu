@@ -1,79 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:okoul_quiz/widgets/shared/input_text.dart';
+import 'package:okoul_quiz/screens/login/login.dart';
+import 'package:otp_text_field/otp_text_field.dart';
 
 class OtpInput extends StatelessWidget {
-  TextEditingController controller1;
-  TextEditingController controller2;
-  TextEditingController controller3;
-  TextEditingController controller4;
-  OtpInput(
-      {required this.controller1,
-      required this.controller2,
-      required this.controller3,
-      required this.controller4});
-
-  FocusNode focusNode1 = FocusNode();
-  FocusNode focusNode2 = FocusNode();
-  FocusNode focusNode3 = FocusNode();
-  FocusNode focusNode4 = FocusNode();
+  OtpFieldController controller;
+  String otp;
+  OtpInput({required this.controller, required this.otp});
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        InputText(
-          keyboardType: TextInputType.number,
-          height: 60,
-          width: 60,
-          textAlign: TextAlign.center,
-          hint: "-",
-          controller: controller1,
-          length: 1,
-          focusNode: focusNode1,
-          onChanged: (value) {
-            FocusScope.of(context).requestFocus(focusNode2);
-          },
-        ),
-        InputText(
-          keyboardType: TextInputType.number,
-          height: 60,
-          width: 60,
-          textAlign: TextAlign.center,
-          hint: "-",
-          controller: controller2,
-          focusNode: focusNode2,
-          length: 1,
-          onChanged: (value) {
-            FocusScope.of(context).requestFocus(focusNode3);
-          },
-        ),
-        InputText(
-          keyboardType: TextInputType.number,
-          height: 60,
-          width: 60,
-          textAlign: TextAlign.center,
-          hint: "-",
-          controller: controller3,
-          length: 1,
-          focusNode: focusNode3,
-          onChanged: (value) {
-            FocusScope.of(context).requestFocus(focusNode4);
-          },
-        ),
-        InputText(
-          keyboardType: TextInputType.number,
-          height: 60,
-          width: 60,
-          textAlign: TextAlign.center,
-          hint: "-",
-          controller: controller4,
-          focusNode: focusNode4,
-          length: 1,
-          onChanged: (value) {
-            FocusScope.of(context).unfocus();
-          },
-        ),
-      ],
-    );
+    return OTPTextField(
+        length: 4,
+        controller: controller,
+        onChanged: (pin) {
+          LoginScreen.otp = pin;
+          print("Changed: " + pin);
+        },
+        onCompleted: (pin) {
+          LoginScreen.otp = pin;
+          print("Completed: " + pin);
+        });
   }
 }

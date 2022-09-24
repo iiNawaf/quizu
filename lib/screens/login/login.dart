@@ -5,20 +5,19 @@ import 'package:okoul_quiz/widgets/login/phone_number_input.dart';
 import 'package:okoul_quiz/style/styles.dart';
 import 'package:okoul_quiz/widgets/shared/loading_btn.dart';
 import 'package:okoul_quiz/widgets/shared/shared_btn.dart';
+import 'package:otp_text_field/otp_field.dart';
 import 'package:phone_number/phone_number.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
+  static String otp = "";
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _phoneNumberController = TextEditingController();
-  final TextEditingController _otp1Controller = TextEditingController();
-  final TextEditingController _otp2Controller = TextEditingController();
-  final TextEditingController _otp3Controller = TextEditingController();
-  final TextEditingController _otp4Controller = TextEditingController();
+  final OtpFieldController _otpController = OtpFieldController();
   bool isLoading = false;
   bool isOtpInputVisible = false;
   String errorMsg = "";
@@ -39,10 +38,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void dispose() {
     _phoneNumberController.clear();
-    _otp1Controller.clear();
-    _otp2Controller.clear();
-    _otp3Controller.clear();
-    _otp4Controller.clear();
     super.dispose();
   }
 
@@ -80,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Text(isOtpInputVisible ? "Verification Code" : "Mobile", style: Theme.of(context).textTheme.titleMedium),
                       const SizedBox(height: 10),
                       isOtpInputVisible 
-                      ? OtpInput(controller1: _otp1Controller, controller2: _otp2Controller, controller3: _otp3Controller, controller4: _otp4Controller,) 
+                      ? OtpInput(controller: _otpController, otp: LoginScreen.otp) 
                       : PhoneNumberInput(controller: _phoneNumberController, isError: errorMsg == "" ? false : true,),
                       Text(errorMsg, style: const TextStyle(color: dangerColor),),
                       const SizedBox(height: 50),
@@ -92,10 +87,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           setState(() {
                             isLoading = true;
                           });
-                          final otp = _otp1Controller.text + _otp2Controller.text + _otp3Controller.text + _otp4Controller.text;
                           if(isOtpInputVisible){
-                              if(!isFieldEmpty(otp)){
-                                final result = await auth.login(otp, "+966${_phoneNumberController.text.replaceAll(" ", "")}");
+                              if(!isFieldEmpty(LoginScreen.otp)){
+                                final result = await auth.login(LoginScreen.otp, "+966${_phoneNumberController.text.replaceAll(" ", "")}");
                                 if(result == "Unauthorized! Your OTP is invalid"){
                                   setState(() {
                                     errorMsg = result;
