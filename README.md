@@ -1,3 +1,6 @@
+[![Contributors][contributors-shield]][1]
+[![LinkedIn][linkedin-shield]][https://www.linkedin.com/in/nawaf-alqattash-ab75a7176/]
+
 # QuizU
 
 QuizU is an application made with Flutter that allows people to join a quiz for 2 minutes and collect as possible points by answering the questions correct.
