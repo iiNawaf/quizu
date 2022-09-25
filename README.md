@@ -85,14 +85,14 @@ This is the lib folder which has the main application code.
 - widgets: Contains the widgets of each screen to prevent widgets duplications.
 - main.dart: The starting point of the application.
 
-###### App Manager:
+#### App Manager:
 
 ```
 app_manager/
 |- app_manager.dart
 ```
 
-###### Models
+#### Models
 ```
 models/
 |- question.dart
@@ -100,7 +100,7 @@ models/
 |- user.dart
 ```
 
-###### Providers
+#### Providers
 ```
 providers/
 |- auth_provider.dart
@@ -108,7 +108,7 @@ providers/
 |- scores_provider.dart
 ```
 
-###### Screens
+#### Screens
 ```
 screens/
 |- home/
@@ -133,8 +133,33 @@ screens/
     |- quiz.dart
 ```
 
-###### Style
+#### Style
 ```
 style/
 |- styles.dart
+```
+
+#### Widgets
+```
+widgets/
+|- home/
+    |- quiz_me_btn.dart
+
+|- login/
+    |- otp_input.dart
+    |- phone_number_input.dart
+
+|- quiz/
+    |- choice.dart
+    |- question.dart
+    |- timer.dart
+
+|- shared/
+    |- background.dart
+    |- exit_btn.dart
+    |- input_text.dart
+    |- loading_btn.dart
+    |- shared_appbar.dart
+    |- shared_btn.dart
+    |- shared_list_tile.dart
 ```
